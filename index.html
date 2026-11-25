@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LoopHarbor is an open-source, asynchronous agent workspace with multi-turn memory and observable tool calls.">
+  <meta name="theme-color" content="#183d32">
+  <title>LoopHarbor — an agent that picks up where you left off</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="motion.js" defer></script>
+  <script src="languages.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="LoopHarbor, back to top" data-i18n-aria="home"><span class="brand-mark" aria-hidden="true">↗</span> LoopHarbor</a>
+    <nav aria-label="Main navigation" data-i18n-aria="navigation">
+      <a href="#how" data-i18n="navHow">How it works</a>
+      <a href="#workspace" data-i18n="navWorkspace">The workspace</a>
+      <a href="#start" data-i18n="navStart">Setup</a>
+      <a href="#faq" data-i18n="navFaq">FAQ</a>
+      <a class="nav-github" href="https://github.com/jimmyken/LoopHarbor">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+    <label class="language-picker"><span class="visually-hidden" data-i18n="language">Language</span>
+      <select id="language" aria-label="Language" data-i18n-aria="language" title="Language selection requires JavaScript" disabled>
+        <option value="en" lang="en">English</option>
+        <option value="zh" lang="zh">简体中文</option>
+        <option value="ja" lang="ja">日本語</option>
+        <option value="de" lang="de">Deutsch</option>
+      </select>
+    </label>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <h1><span data-i18n="heroTitle1">Keep talking.</span><br><span data-i18n="heroTitle2">Keep context.</span></h1>
+        <p data-i18n="heroText">LoopHarbor is an open-source agent workspace for asynchronous tasks, multi-turn memory, and tools you can actually inspect.</p>
+        <a class="button button-light" href="https://github.com/jimmyken/LoopHarbor"><span data-i18n="heroCta">Explore on GitHub</span> <span aria-hidden="true">↗</span></a>
+        <a class="hero-link" href="#how"><span data-i18n="heroLink">See how it works</span> <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="hero-image" data-ui>
+        <img src="assets/workspace.jpg" alt="LoopHarbor workspace showing a conversation, a calculator tool call, and session details in Chinese" data-i18n-alt="workspaceAlt" width="1440" height="900">
+        <figcaption data-i18n="heroCaption">Real workspace · example session with synthetic data</figcaption>
+      </figure>
+      <div class="hero-bottom"><span data-i18n="heroFoot">Built for conversations that continue.</span><span data-i18n="heroTags">Chat · Review · Remember</span></div>
+    </section>
+
+    <section class="intro section-wrap" id="how">
+      <div>
+        <h2><span data-i18n="introTitle1">More than</span><br><span data-i18n="introTitle2">one prompt.</span></h2>
+        <p data-i18n="introText">Keep asking. LoopHarbor connects each turn to the same session, so your agent has context to work with instead of starting from scratch.</p>
+        <p class="intro-detail" data-i18n="introDetail">Each request gets its own task ID. Continue with the same thread ID: turns in a session run in order, while separate sessions can run in parallel.</p>
+      </div>
+      <div class="loop-diagram">
+        <div class="loop-heading" data-i18n="loopTitle">A conversation, in motion</div>
+        <div class="loop-step"><strong data-i18n="loopRequest">Request</strong><span data-i18n="loopRequestText">FastAPI creates a task and returns its ID</span><span aria-hidden="true">↓</span></div>
+        <div class="loop-step"><strong data-i18n="loopQueue">Queue</strong><span data-i18n="loopQueueText">Redis and Celery dispatch work to a worker</span><span aria-hidden="true">↓</span></div>
+        <div class="loop-step"><strong data-i18n="loopAgent">Agent</strong><span data-i18n="loopAgentText">LangGraph coordinates the model and tools</span><span aria-hidden="true">↓</span></div>
+        <div class="loop-step"><strong data-i18n="loopMemory">Memory</strong><span data-i18n="loopMemoryText">PostgreSQL keeps state for the next turn</span><span aria-hidden="true">↺</span></div>
+      </div>
+    </section>
+
+    <section class="workspace-section" id="workspace">
+      <div class="section-wrap workspace-heading">
+        <h2><span data-i18n="workspaceTitle1">See the work.</span><br><span data-i18n="workspaceTitle2">See the context.</span></h2>
+        <p data-i18n="workspaceText">A workspace for conversations, task status, memory, and tool events. Find your place in a long thread, collapse what you don't need, and make room for what matters.</p>
+      </div>
+      <figure class="wide-shot section-wrap" data-ui>
+        <img src="assets/tool-call.jpg" alt="Example conversation with a calculator tool event expanded in the LoopHarbor workspace" data-i18n-alt="toolAlt" width="1440" height="900" loading="lazy">
+        <figcaption data-i18n="toolCaption">Tool inputs and outputs are visible alongside the conversation.</figcaption>
+      </figure>
+      <div class="section-wrap capabilities">
+        <div><h3 data-i18n="readTitle">Read comfortably.</h3><p data-i18n="readText">Markdown, code, tables, and mathematical expressions render in the conversation. Search by message, turn, or heading.</p></div>
+        <div><h3 data-i18n="trailTitle">Follow the trail.</h3><p data-i18n="trailText">Expand tool calls, check task status, or fold messages and memory down to a useful preview.</p></div>
+        <div><h3 data-i18n="spaceTitle">Make space.</h3><p data-i18n="spaceText">Hide the side panels to focus on the conversation. On smaller screens they become drawers.</p></div>
+      </div>
+    </section>
+
+    <section class="memory-section section-wrap">
+      <div class="memory-copy">
+        <h2><span data-i18n="memoryTitle1">Memory that</span><br><span data-i18n="memoryTitle2">moves with you.</span></h2>
+        <p data-i18n="memoryText">Return to a session and continue where you left off. Each session processes its turns in order; memory summaries help carry context forward.</p>
+        <p class="small-note" data-i18n="memoryDetail">By default, the model summarizes after five successful turns. Sessions, checkpoints, and task records are stored in PostgreSQL. Failed turns are not added to memory.</p>
+      </div>
+      <figure class="memory-shot" data-ui>
+        <img src="assets/memory.jpg" alt="Session details panel showing a sample memory summary and task queue in Chinese" data-i18n-alt="memoryAlt" width="300" height="882" loading="lazy">
+        <figcaption data-i18n="memoryCaption">Session details, at a glance.</figcaption>
+      </figure>
+    </section>
+
+    <section class="review-section">
+      <div class="section-wrap review-grid">
+        <div>
+          <h2><span data-i18n="reviewTitle1">Chat. Review.</span><br><span data-i18n="reviewTitle2">Continue.</span></h2>
+          <p data-i18n="reviewText">Ask a general question or start a contract-review session. Both modes support follow-up turns and visible tool activity.</p>
+          <details>
+            <summary><span data-i18n="agentQuestion">What can the agent do?</span> <span aria-hidden="true">+</span></summary>
+            <p data-i18n="agentAnswer">It can use arithmetic and worker-local date and time tools, then continue its response. A configured OpenAI-compatible model with tool calling is required.</p>
+          </details>
+          <details>
+            <summary><span data-i18n="legalQuestion">A note on contract review</span> <span aria-hidden="true">+</span></summary>
+            <p data-i18n="legalAnswer">Review output is for reference only and is not legal advice. Verify important conclusions with a qualified professional.</p>
+          </details>
+        </div>
+        <figure class="review-shot" data-ui>
+          <img src="assets/contract.jpg" alt="Contract review example showing a payment clause and a risk note in Chinese" data-i18n-alt="contractAlt" width="1440" height="900" loading="lazy">
+          <figcaption data-i18n="contractCaption">A sample contract-review session.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="start section-wrap" id="start">
+      <div class="start-heading">
+        <h2><span data-i18n="startTitle1">From code</span><br><span data-i18n="startTitle2">to conversation.</span></h2>
+        <p data-i18n="startText">Run the stack locally, connect your model, then open the workspace. The repository has complete platform-specific commands and multi-turn API examples.</p>
+        <a class="text-link" href="https://github.com/jimmyken/LoopHarbor#readme"><span data-i18n="startLink">Read the setup guide</span> ↗</a>
+      </div>
+      <ol class="start-list">
+        <li><strong data-i18n="setup1">Start the infrastructure</strong><span data-i18n="setup1Text">Use Docker Compose for Redis and PostgreSQL; install dependencies in a Python 3.12 environment.</span></li>
+        <li><strong data-i18n="setup2">Configure your model</strong><span data-i18n="setup2Text">Add the provider endpoint, model name, and API key to your local .env. Tool calling must be supported.</span></li>
+        <li><strong data-i18n="setup3">Start API and worker</strong><span data-i18n="setup3Text">Launch FastAPI and a Celery worker. On macOS, the README recommends the solo pool.</span></li>
+        <li><strong data-i18n="setup4">Continue the conversation</strong><span data-i18n="setup4Text">Open the local workspace or use the API. Reuse the thread ID for follow-up turns.</span></li>
+      </ol>
+    </section>
+
+    <section class="faq section-wrap" id="faq">
+      <h2 data-i18n="faqTitle">Good to know.</h2>
+      <div>
+        <details><summary><span data-i18n="faq1">What do I need to run it?</span> <span aria-hidden="true">+</span></summary><p data-i18n="faq1Text">Python 3.12, Docker and Docker Compose, and a configured OpenAI-compatible model provider that supports tools and tool calls. Follow the setup instructions in the repository.</p></details>
+        <details><summary><span data-i18n="faq2">Is everything offline?</span> <span aria-hidden="true">+</span></summary><p data-i18n="faq2Text">No. The workspace runs locally, but model inputs are sent to your configured provider. Review its privacy and data-use terms before submitting sensitive information.</p></details>
+        <details><summary><span data-i18n="faq3">Can I expose it to the internet?</span> <span aria-hidden="true">+</span></summary><p data-i18n="faq3Text">Not as-is. The API and UI have no authentication and are intended for local use only. Other local processes may still access them.</p></details>
+        <details><summary><span data-i18n="faq4">What language is the interface in?</span> <span aria-hidden="true">+</span></summary><p data-i18n="faq4Text">The current workspace, prompts, error messages, and memory summaries are in Chinese. Documentation is available in Chinese, English, Japanese, and German.</p></details>
+        <details><summary><span data-i18n="faq5">What happens if a task fails?</span> <span aria-hidden="true">+</span></summary><p data-i18n="faq5Text">A model configuration error or failed request marks the task as failed rather than silently switching to a local fallback. Later turns can continue, but the failed turn is not added to memory.</p></details>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="section-wrap closing-content">
+        <div><h2 data-i18n="closingTitle">Pick up the thread.</h2><p data-i18n="closingText">Explore the code, run your own workspace, and see where the next conversation takes you.</p></div>
+        <a class="button button-light" href="https://github.com/jimmyken/LoopHarbor"><span data-i18n="closingCta">Get started on GitHub</span> <span aria-hidden="true">↗</span></a>
+      </div>
+      <footer class="section-wrap"><span data-i18n="footer">LoopHarbor · an open-source agent workspace</span><a href="https://github.com/jimmyken/LoopHarbor">GitHub ↗</a></footer>
+    </section>
+  </main>
+</body>
+</html>
